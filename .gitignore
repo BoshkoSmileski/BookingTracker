@@ -1,0 +1,54 @@
+# .NET
+backend/**/bin/
+backend/**/obj/
+backend/**/*.user
+.vs/
+*.user
+*.suo
+
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+node_modules/
+dist/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+
+# SQL Server installer (downloaded locally during environment setup)
+SQLEXPR_x64_ENU/
+
+# Playwright / E2E (build output, browser artifacts, throwaway API temp dir)
+backend/artifacts/
+frontend/test-results/
+frontend/playwright-report/
+frontend/blob-report/
+frontend/node_modules/.vite-e2e/
+
+# Local secrets and per-environment overrides.
+# Secrets belong in .NET User Secrets (Development) or environment variables
+# (Production) - never in a tracked file. See README "Security and configuration".
+.env
+.env.*
+!.env.example
+**/appsettings.Local.json
+**/appsettings.Production.json
+**/secrets.json
+
+# SQL Server data files and backups - never publish a database
+*.mdf
+*.ldf
+*.ndf
+*.bak
+
+# dotnet test artifacts
+**/TestResults/

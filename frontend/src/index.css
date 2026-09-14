@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+/*
+ * The palette.
+ *
+ * Two deliberate choices sit behind these, and both are why the app does not
+ * read as a template:
+ *
+ * `accent` is a deep pine-teal. Almost every generated dashboard reaches for
+ * blue, indigo or violet; choosing outside that trio is most of what stops a UI
+ * looking stock. It is also dark enough (accent-600 is ~6:1 on white, white
+ * text on it ~6.2:1) to carry primary buttons, active navigation and focus
+ * rings without needing a second "dark" colour beside it.
+ *
+ * `shell` is a warm off-white for the navigation rail. Tailwind's default grays
+ * are cool, and a cool-gray sidebar beside white content is the most
+ * recognisable stock surface there is. Warming the rail by a few degrees of hue
+ * costs nothing, reads as paper next to the white "page", and is invisible as a
+ * decision while being obvious as a result.
+ */
+@theme {
+  --color-accent-50: #f2f8f6;
+  --color-accent-100: #dfeeea;
+  --color-accent-200: #bfddd6;
+  --color-accent-300: #93c4b9;
+  --color-accent-400: #63a598;
+  --color-accent-500: #43897c;
+  --color-accent-600: #316e63;
+  --color-accent-700: #285a51;
+  --color-accent-800: #234943;
+  --color-accent-900: #1f3d39;
+
+  --color-shell-50: #faf9f7;
+  --color-shell-100: #f2f0eb;
+  --color-shell-200: #e7e3dc;
+  --color-shell-300: #d6d0c6;
+  --color-shell-600: #6f695f;
+  --color-shell-700: #4f4a43;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  /* 15px base, so anything inheriting rather than setting its own size lands on
+     the app's scale instead of the browser's 16px default. */
+  font-size: 15px;
+  font-family: system-ui, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * Native controls, in the app's accent rather than the operating system's.
+ *
+ * Checkboxes are the app's only unstyled control, and every one of them was
+ * rendering in the OS accent - Windows blue - which put a second accent colour
+ * on the notification, calendar, working-hours and booking-form screens without
+ * anyone choosing one. `accent-color` recolours the native control itself, so
+ * the checkbox keeps its platform behaviour and its indeterminate state while
+ * obeying the palette. One declaration, every checkbox and radio in the app.
+ */
+input[type='checkbox'],
+input[type='radio'] {
+  accent-color: var(--color-accent-600);
+}
+
+/*
+ * `<input type="time">` and `<input type="date">` render a native picker button
+ * that inherits the OS accent too. Nudging it to the text colour keeps the
+ * working-hours grid monochrome, so the only colour on that screen remains the
+ * one the design system put there.
+ */
+input[type='time']::-webkit-calendar-picker-indicator,
+input[type='date']::-webkit-calendar-picker-indicator {
+  opacity: 0.55;
+  cursor: pointer;
+}
+
+input[type='time']:hover::-webkit-calendar-picker-indicator,
+input[type='date']:hover::-webkit-calendar-picker-indicator {
+  opacity: 0.9;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

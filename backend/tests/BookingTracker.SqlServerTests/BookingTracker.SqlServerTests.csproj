@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.*" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      The Api project reference boots the real pipeline, exactly as the InMemory
+      integration suite does.
+
+      The reference to BookingTracker.IntegrationTests is deliberate and is the
+      whole reason this project is small: TestJwt, TestData, BookingFlow, the
+      recording email/calendar doubles and the host's isolation decisions are
+      reused rather than written a second time. Only the database registration
+      differs, which is the single thing this project exists to change.
+
+      VSTest enumerates tests in the assembly under test only, so nothing in
+      BookingTracker.IntegrationTests runs twice because of this reference.
+    -->
+    <ProjectReference Include="..\..\src\BookingTracker.Api\BookingTracker.Api.csproj" />
+    <ProjectReference Include="..\..\src\BookingTracker.Domain\BookingTracker.Domain.csproj" />
+    <ProjectReference Include="..\..\src\BookingTracker.Application\BookingTracker.Application.csproj" />
+    <ProjectReference Include="..\..\src\BookingTracker.Infrastructure\BookingTracker.Infrastructure.csproj" />
+    <ProjectReference Include="..\BookingTracker.IntegrationTests\BookingTracker.IntegrationTests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>

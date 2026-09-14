@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.2" />
+    <!--
+      The one package this layer needs that the unit tests do not: it supplies
+      WebApplicationFactory, which boots the real Program.cs in-process and
+      hands back an HttpClient wired to it - no sockets, no ports, no
+      separately-launched API.
+    -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.*" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.*" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      The Api project reference is the point: these tests go through its real
+      pipeline. Domain/Application/Infrastructure come along transitively and
+      are referenced explicitly only for the entity/DTO types the tests assert
+      on and seed with.
+    -->
+    <ProjectReference Include="..\..\src\BookingTracker.Api\BookingTracker.Api.csproj" />
+    <ProjectReference Include="..\..\src\BookingTracker.Domain\BookingTracker.Domain.csproj" />
+    <ProjectReference Include="..\..\src\BookingTracker.Application\BookingTracker.Application.csproj" />
+    <ProjectReference Include="..\..\src\BookingTracker.Infrastructure\BookingTracker.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>
